@@ -10,6 +10,13 @@ class App extends React.Component {
     lastQuery: "",
     files: mockFiles
   };
+  componentWillMount() {
+    fetch("http://localhost:3000/documents")
+      .then(res => res.json())
+      .then(files =>
+        this.setState({ files, lastQuery: "" })
+      )
+  }
   changeInput = e => {
     this.setState({ query: e.target.value });
   };
@@ -18,7 +25,7 @@ class App extends React.Component {
     const { isSearching, query, lastQuery } = this.state;
     if (isSearching || query === lastQuery) return;
     this.setState({ isSearching: true }, () => {
-      fetch("/files/search?q=" + query)
+      fetch("http://localhost:3000/documents/search?q=" + query)
         .then(res => res.json())
         .then(files =>
           this.setState({ files, isSearching: false, lastQuery: query })

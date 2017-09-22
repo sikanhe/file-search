@@ -34,14 +34,14 @@ export default class Files extends React.Component {
                 <th>Link</th>
               </tr>
               {files.map(
-                ({ id, name, description, url, filetype, uploadedAt }) => (
+                ({ id, filename, description, content_type, created_at }) => (
                   <tr key={id}>
-                    <td>{name}</td>
+                    <td>{filename}</td>
                     <td>{description}</td>
-                    <td>{filetype}</td>
-                    <td>{this.renderTime(uploadedAt)}</td>
+                    <td>{content_type}</td>
+                    <td>{this.renderTime(created_at)}</td>
                     <td>
-                      <a href={url}>Download</a>
+                      <a href={`http://localhost:3000/documents/${id}`}>Download</a>
                     </td>
                   </tr>
                 )

@@ -3,11 +3,12 @@ import React from "react";
 export default class Uploader extends React.Component {
   state = { isUploading: false };
   handleFileUpload = e => {
+    e.preventDefault();
     if (this.xhr) this.xhr.abort();
     const file = e.target.files[0];
     const xhr = new XMLHttpRequest();
     this.xhr = xhr;
-    xhr.open("POST", "/files/", true);
+    xhr.open("POST", "http://localhost:3000/documents/", true);
 
     xhr.addEventListener("load", () => {
       const response = JSON.parse(xhr.response);
@@ -23,7 +24,8 @@ export default class Uploader extends React.Component {
 
     const formData = new window.FormData();
     formData.append("Content-Type", file.type);
-    formData.append("file", file);
+    formData.append("document[file]", file);
+    formData.append("document[description]", "description for " + file.name)
 
     xhr.send(formData);
 
@@ -31,7 +33,8 @@ export default class Uploader extends React.Component {
   };
 
   handleFinishUpload = (error, response) => {
-    window.history.go("/");
+    if (!error) window.history.go("/");
+    console.log(error)
   };
 
   reset = () => {
