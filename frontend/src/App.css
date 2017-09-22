@@ -1,0 +1,48 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.App {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+input {
+  display: block;
+  width: 90%;
+  padding: 8px 11px;
+  font-size: 14px;
+  border: 1px solid rgba(0, 0, 0, .2);
+  border-radius: 3px;
+  margin-bottom: 4px;
+}
+
+button {
+  margin: 5px auto;
+  font-size: 14px;
+}
+
+p {
+  margin-top: 40px;
+  font-size: 20px;
+  border-bottom: 1px solid #999;
+}
+
+table td, th {
+  padding-right: 40px;
+  text-align: left;
+}
+
+.searchButton {
+  background: none;
+  padding: 7px 24px;
+  border: 1px solid rgba(0, 0, 0, .2);
+  border-radius: 3px;
+  margin-right: 20px;
+}
+
+.showAllLink {
+  display: inline-block;
+  margin-top: 30px;
+}
