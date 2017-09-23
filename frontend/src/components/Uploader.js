@@ -2,11 +2,15 @@ import React from "react";
 import { uploadFile } from "../api";
 
 export default class Uploader extends React.Component {
-  state = { isUploading: false, description: "" };
-  changeDescription = e =>
-    this.setState({ description: e.target.value });
+  state = { isUploading: false, description: "", error: null };
+  changeDescription = e => this.setState({ description: e.target.value });
   handleFileUpload = e => {
     e.preventDefault();
+    const file = this.fileInput.files[0];
+    if (!file) {
+      this.setState({ error: "You must select a file" });
+      return;
+    }
     if (this.state.isUploading) return;
     if (this.xhr) this.xhr.abort();
     this.xhr = uploadFile(
@@ -23,13 +27,11 @@ export default class Uploader extends React.Component {
     console.log(error);
   };
   reset = () => {
-    this.xhr.abort();
-    this.setState({ isUploading: false });
+    if (this.xhr) this.xhr.abort();
+    this.setState({ isUploading: false, error: null });
   };
   render() {
-    const inputStyle = this.state.isUploading
-      ? { opacity: 0.3 }
-      : {};
+    const inputStyle = this.state.isUploading ? { opacity: 0.3 } : {};
 
     return (
       <div style={{ marginBottom: "50px" }}>
@@ -43,6 +45,7 @@ export default class Uploader extends React.Component {
             type="file"
             disabled={this.state.isUploading}
             style={inputStyle}
+            onChange={this.reset}
           />
           <input
             value={this.state.description}
@@ -54,6 +57,7 @@ export default class Uploader extends React.Component {
           <button type="submit" className="button">
             Upload
           </button>
+          {this.state.error && <span>{this.state.error}</span>}
           {this.state.isUploading && <span>Uploading....</span>}
           {this.state.isUploading && (
             <span>

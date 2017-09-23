@@ -1,6 +1,11 @@
 require 'yomu'
 
 class Document < ApplicationRecord
+  validates :filename, presence: true
+  validates :content_type, presence: true
+  validates :file_content, presence: true
+  validates :text_content, presence: true
+
   def initialize(params = {})
     file = params.delete(:file)
     super
