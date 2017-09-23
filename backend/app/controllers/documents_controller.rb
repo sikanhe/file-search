@@ -6,7 +6,7 @@ class DocumentsController < ApplicationController
   def index
     query = search_params["search"]
     if query
-      @documents = Document.where("filename LIKE ? OR description LIKE ? OR text_content LIKE ?", "%#{query}%", "%#{query}%", "%#{query}%")
+      @documents = Document.search(query)
     else
       @documents = Document.all
     end

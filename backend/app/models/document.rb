@@ -16,4 +16,11 @@ class Document < ApplicationRecord
       self.text_content = text
     end
   end
+
+  def self.search(query)
+    where(
+      "filename LIKE ? OR description LIKE ? OR text_content LIKE ?",
+      "%#{query}%", "%#{query}%", "%#{query}%"
+    )
+  end
 end
