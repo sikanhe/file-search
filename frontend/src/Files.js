@@ -33,19 +33,23 @@ export default class Files extends React.Component {
                 <th>Uploaded at</th>
                 <th>Link</th>
               </tr>
-              {files.map(
-                ({ id, filename, description, content_type, created_at }) => (
-                  <tr key={id}>
-                    <td>{filename}</td>
-                    <td>{description}</td>
-                    <td>{content_type}</td>
-                    <td>{this.renderTime(created_at)}</td>
-                    <td>
-                      <a href={`http://localhost:3000/documents/${id}`}>Download</a>
-                    </td>
-                  </tr>
-                )
-              )}
+              {files
+                .sort((a, b) => a.created_at < b.created_at)
+                .map(
+                  ({ id, filename, description, content_type, created_at }) => (
+                    <tr key={id}>
+                      <td>{filename}</td>
+                      <td>{description || "N/A"}</td>
+                      <td>{content_type}</td>
+                      <td>{this.renderTime(created_at)}</td>
+                      <td>
+                        <a href={`http://localhost:3000/documents/${id}`}>
+                          Download
+                        </a>
+                      </td>
+                    </tr>
+                  )
+                )}
             </tbody>
           </table>
         ) : (

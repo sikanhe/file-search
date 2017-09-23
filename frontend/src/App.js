@@ -25,7 +25,7 @@ class App extends React.Component {
     const { isSearching, query, lastQuery } = this.state;
     if (isSearching || query === lastQuery) return;
     this.setState({ isSearching: true }, () => {
-      fetch("http://localhost:3000/documents/search?q=" + query)
+      fetch("http://localhost:3000/documents?search=" + query)
         .then(res => res.json())
         .then(files =>
           this.setState({ files, isSearching: false, lastQuery: query })
@@ -39,6 +39,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <h1 className="title">My Files</h1>
+        <Uploader />
         <form onSubmit={this.search}>
           <input
             placeholder="Search by file names, description, and etc.."
@@ -46,7 +47,7 @@ class App extends React.Component {
             onChange={this.changeInput}
           />
           <button
-            className="searchButton"
+            className="button"
             type="submit"
             disabled={this.state.isSearching}
           >
@@ -56,7 +57,6 @@ class App extends React.Component {
             Show All files
           </a>
         </form>
-        <Uploader />
         <Files files={this.state.files} query={this.state.lastQuery} />
       </div>
     );

@@ -4,7 +4,12 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
-    @documents = Document.all
+    query = search_params["search"]
+    if query
+      @documents = Document.where("filename LIKE ? OR description LIKE ? OR text_content LIKE ?", "%#{query}%", "%#{query}%", "%#{query}%")
+    else
+      @documents = Document.all
+    end
   end
 
   # GET /documents/1
@@ -52,5 +57,9 @@ class DocumentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def document_params
       params.require('document').permit(:file, :description)
+    end
+
+    def search_params
+      params.permit('search')
     end
 end

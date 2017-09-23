@@ -12,8 +12,7 @@ class Document < ApplicationRecord
       self.file_content = content
 
       text = Yomu.read :text, content
-      metadata = Yomu.read :metadata, content
-      self.content_type = metadata['Content-Type']
+      self.content_type = `file -b #{file.path}`.gsub(/\n/,"")
       self.text_content = text
     end
   end
